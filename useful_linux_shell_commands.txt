@@ -1,0 +1,51 @@
+#Group the files into new folders by file size
+#it finds the files meet the given size criteria and copy them into the target directory without overwriting an existing file
+find folder_of_files_under80MB -type f -size +9185k -size -81M -exec cp -nv {} folder_of_files_10MB_80MB/ \;
+find folder_of_files -type f -size +1024k -exec cp -nv {} folder_of_files_over1MB/ \;
+find folder_of_files -type f -size -1000000c -exec cp -nv {} folder_of_files_under1MB/ \;
+
+#To perform a global search and replace in vi, use the search and replace command in command mode:
+:%s/search_string/replacement_string/g
+:%s/new york/New York/g
+
+
+#Replace with the command line:
+sed -i 'search_string/replacement_string/g' target_file.sh
+##You can use a different character for the delimiter, like this:
+sed -i 's!pattern!replacement!g' /path/to/file
+sed -i 'search_string#replacement_string#g' target_file.txt
+#Do the multiple replacements in a single line for loop:
+for i in search_folder/*.sh; do sed -i 's!cp !cp -R -u -p !g' $i; done
+for i in search_folder/*.txt; do sed -i 's!pattern!replacement!g' $i; done
+
+#Delete the lines start with a certain pattern in all target files
+find . -type f -name "*_target_files_*.txt" | xargs sed "/^PATTERN/d"
+
+#If you have too many files to remove, try this trick:
+find . -name '*' | xargs rm -v
+
+#Remove files with a certain name pattern
+find . -name '*_pattern1.txt' | xargs rm -v
+
+#Find files using different name patterns and delete them at once
+find ALDH1_VS/ -type f \( -name "*_pattern_*_x.csv" -o -name "*_pattern_*_y.csv" -o -name "*_pattern_*_x.txt" -o -name "*_XP_*_pocket_ECFP.txt" -o -name "*_pattern_*_y.txt" -o -name "*_pattern_*_z.txt" \) | xargs rm -v
+
+#Count the lines of the target files
+find ../target_folder/ -type f -name '*_target_file.txt' | wc -l
+wc -l my_target_file.txt
+
+#Recursively submit the bash files
+for i in *.sh; do source $i ; sleep 10 ; cd /path/to/folder/target_folder ; done
+
+#write the results to standard output.
+echo $(find /path/to/folder/target_folder/ -type f -name "*_pattern_x.csv")
+
+#Clean duplicates
+cat input_file_withdups.txt | awk '$1 != $2' > output_file_nodups.txt
+
+#Kill multiple running jobs using a range for JOBIDs
+for i in {30496205..30498693}; do bkill $i || true; done
+
+
+
+
